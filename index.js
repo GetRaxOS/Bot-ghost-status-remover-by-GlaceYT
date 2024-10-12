@@ -19,10 +19,10 @@ app.listen(port, () => {
   console.log('\x1b[36m[ SERVER ]\x1b[0m', '\x1b[32m SH : http://localhost:' + port + ' ✅\x1b[0m');
 });
 
-const statusMessages = ["Watching Rax", "https://discord.gg/FGMwJhkwKT"];
-const statusTypes = [ 'dnd'];
+const statusMessages = ["Watching Rax"];
+const statusTypes = ['dnd']; // Only 'dnd' status
+
 let currentStatusIndex = 0;
-let currentTypeIndex = 0;
 
 async function login() {
   try {
@@ -38,14 +38,14 @@ async function login() {
 
 function updateStatus() {
   const currentStatus = statusMessages[currentStatusIndex];
-  const currentType = statusTypes[currentTypeIndex];
+  const currentType = statusTypes[0]; // Always use 'dnd'
+  
   client.user.setPresence({
-    activities: [{ name: currentStatus, type: ActivityType.Custom }],
+    activities: [{ name: currentStatus, type: ActivityType.Watching }], // Use Watching for this example
     status: currentType,
   });
+  
   console.log('\x1b[33m[ STATUS ]\x1b[0m', `Updated status to: ${currentStatus} (${currentType})`);
-  currentStatusIndex = (currentStatusIndex + 1) % statusMessages.length;
-  currentTypeIndex = (currentTypeIndex + 1) % statusTypes.length;
 }
 
 function heartbeat() {
@@ -57,7 +57,6 @@ function heartbeat() {
 client.once('ready', () => {
   console.log('\x1b[36m[ INFO ]\x1b[0m', `\x1b[34mPing: ${client.ws.ping} ms \x1b[0m`);
   updateStatus();
-  setInterval(updateStatus, 10000);
   heartbeat();
 });
 
