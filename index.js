@@ -56,14 +56,11 @@ async function login() {
 
 function updateStatus() {
   const currentStatus = statusMessages[currentStatusIndex];
-  const currentType = statusTypes[currentTypeIndex];
   client.user.setPresence({
     activities: [{ name: currentStatus, type: ActivityType.Custom }],
-    status: currentType,
+    status: statusTypes[currentTypeIndex], // Assuming you want to keep this constant
   });
-  console.log('\x1b[33m[ STATUS ]\x1b[0m', `Updated status to: ${currentStatus} (${currentType})`);
-  currentStatusIndex = (currentStatusIndex + 1) % statusMessages.length;
-  currentTypeIndex = (currentTypeIndex + 1) % statusTypes.length;
+  console.log('\x1b[33m[ STATUS ]\x1b[0m', `Updated status to: ${currentStatus}`);
 }
 
 function heartbeat() {
@@ -72,10 +69,12 @@ function heartbeat() {
   }, 30000);
 }
 
+
+// In your ready event
 client.once('ready', () => {
   console.log('\x1b[36m[ INFO ]\x1b[0m', `\x1b[34mPing: ${client.ws.ping} ms \x1b[0m`);
   updateStatus();
-  setInterval(updateStatus, 10000);
+  setInterval(updateStatus, 10000); // This will keep calling updateStatus every 10 seconds
   heartbeat();
 });
 
