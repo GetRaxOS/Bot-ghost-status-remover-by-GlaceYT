@@ -74,7 +74,7 @@ function heartbeat() {
 client.once('ready', () => {
   console.log('\x1b[36m[ INFO ]\x1b[0m', `\x1b[34mPing: ${client.ws.ping} ms \x1b[0m`);
   updateStatus();
-  setInterval(updateStatus, 10000); // This will keep calling updateStatus every 10 seconds
+  setInterval(updateStatus, 30000); // This will keep calling updateStatus every 30 seconds
   heartbeat();
 });
 
