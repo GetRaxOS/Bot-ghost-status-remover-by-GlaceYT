@@ -8,6 +8,3 @@
       alt="License: MIT" />
   </a>
 </p>
-
-🎉 Congratulations! Your bot is now up and running. 🥳
-
